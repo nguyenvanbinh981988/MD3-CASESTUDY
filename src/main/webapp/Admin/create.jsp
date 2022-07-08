@@ -1,76 +1,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create SellProduct</title>
+    <title>Tạo Admin mới</title>
 
 </head>
 <body>
 <center>
-    <h1>Tạo một sản phẩm mới</h1>
+    <h1>Tạo Admin mới</h1>
     <h2>
-        <a href="SellProduct?action=Sell">Quay về danh sách sản phẩm đăng lên Web</a>
+        <a href="Admin?action=admin">Quay về danh sách Admin</a>
     </h2>
 </center>
 <div align="center">
     <form method="post">
         <table border="1" cellpadding="5">
             <caption>
-                <h2>Nhập thông tin sản phẩm mới</h2>
+                <h2>Nhập thông Admin</h2>
             </caption>
             <tr>
-                <th>Tên sản phẩm:</th>
+                <th>Tên Admin:</th>
                 <td>
-                    <input type="text" name="name" id="nameSellProduct" size="45"/>
+                    <input type="text" name="name" id="nameAdmin" size="45"/>
                 </td>
             </tr>
             <tr>
-                <th>Giá bán:</th>
+                <th>Vị trí công việc:</th>
                 <td>
-                    <input type="text" name="price" id="priceSellProduct" size="45"/>
+                    <input type="text" name="position" id="priceAdmin" size="45"/>
                 </td>
             </tr>
             <tr>
-                <th>Giảm giá:</th>
+                <th>PassWork:</th>
                 <td>
-                    <input type="text" name="discount" id="discountSellProduct" size="45"/>
+                    <input type="text" name="passWork" id="discountAdmin" size="45"/>
                 </td>
             </tr>
-            <tr>
-                <th>Số lượng hàng nhập:</th>
-                <td>
-                    <input type="text" name="importAmount" id="importAmountSellProduct" size="45"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Số lượng hàng đã bán:</th>
-                <td>
-                    <input type="text" name="exportAmount" id="exportAmountSellProduct" size="45"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Ảnh sản phẩm:</td>
-                <td>
-                    <input type="text" name="picture" id="pictureSellProduct" size="45"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Mô tả:</td>
-                <td>
-                    <input type="text" name="properties" id="propertiesSellProduct" size="45"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Loại sản phẩm:</td>
-                <td>
-                    <input type="text" name="productType" id="productTypeSellProduct" size="45"/>
-                </td>
-            </tr><tr>
-            <td>nhãn hàng:</td>
-            <td>
-                <input type="text" name="maker" id="makerSellProduct" size="45"/>
-            </td>
-        </tr>
             <tr>
                 <td colspan="2" align="center">
                     <input type="submit" value="Save"/>

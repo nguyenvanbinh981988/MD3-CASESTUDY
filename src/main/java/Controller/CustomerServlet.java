@@ -1,22 +1,28 @@
 package Controller;
 
-import Dao.CRUD;
+import Dao.CustomerDao;
+import Dao.RankGuestDao;
 import Dao.SellProductDao;
+import Model.Customer;
+import Model.RankGuest;
 import Model.SellProduct;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "SellProductServlet", urlPatterns = "/SellProduct")
-public class SellProductServlet extends HttpServlet {
+@WebServlet(name = "CustomerServlet", urlPatterns = "/Customer")
+public class CustomerServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private SellProductDao sellProductDao = new SellProductDao();
+    private CustomerDao customerDao = new CustomerDao();
+    private RankGuestDao rankGuestDao = new RankGuestDao();
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -25,9 +31,9 @@ public class SellProductServlet extends HttpServlet {
         }
         try {
             switch (action) {
-                case "create":
-                    create(req, resp);
-                    break;
+//                case "create":
+//                    create(req, resp);
+//                    break;
                 case "edit":
                     edit(req, resp);
                     break;
@@ -49,9 +55,9 @@ public class SellProductServlet extends HttpServlet {
 
         try {
             switch (action) {
-                case "create":
-                    showCreate(req, resp);
-                    break;
+//                case "create":
+//                    showCreate(req, resp);
+//                    break;
                 case "edit":
                     showEdit(req, resp);
                     break;
@@ -73,50 +79,47 @@ public class SellProductServlet extends HttpServlet {
     //-------------------Hien thi toan bo list SellProduct----------------------------
     private void showList(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
-        List<SellProduct> sellProducts = sellProductDao.selectAll();
-        req.setAttribute("sellProducts", sellProducts);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/SellProductList.jsp");
+        List<Customer> customers = customerDao.selectAll();
+        req.setAttribute("customers", customers);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("Customer/CustomerList.jsp");
         dispatcher.forward(req, resp);
     }
 
 
     //-------------------add SellProduct----------------------------
 
-    private void showCreate(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.setAttribute("sellProducts",sellProductDao.selectAll());
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/create.jsp");
-        dispatcher.forward(req, resp);
-    }
-
-
-    private void create(HttpServletRequest req, HttpServletResponse resp)
-            throws SQLException, IOException, ServletException {
-        String name = req.getParameter("name");
-        int price = Integer.parseInt(req.getParameter("price"));
-        float discount = Float.parseFloat(req.getParameter("discount"));
-        int importAmount = Integer.parseInt(req.getParameter("importAmount"));
-        int exportAmount = Integer.parseInt(req.getParameter("exportAmount"));
-        String picture = req.getParameter("picture");
-        String properties = req.getParameter("properties");
-        String productType = req.getParameter("productType");
-        String maker = req.getParameter("maker");
-
-        SellProduct newSellProduct = new SellProduct(name,price,discount,importAmount,exportAmount,picture,properties,productType,maker);
-        sellProductDao.creat(newSellProduct);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/create.jsp");
-        req.setAttribute("message", "New sellProduct was created");
-        dispatcher.forward(req, resp);
-    }
+//    private void showCreate(HttpServletRequest req, HttpServletResponse resp)
+//            throws ServletException, IOException {
+//        req.setAttribute("customers",customerDao.selectAll());
+//        RequestDispatcher dispatcher = req.getRequestDispatcher("Customer/create.jsp");
+//        dispatcher.forward(req, resp);
+//    }
+//
+//
+//    private void create(HttpServletRequest req, HttpServletResponse resp)
+//            throws SQLException, IOException, ServletException {
+//        String name = req.getParameter("name");
+//        String bankCard = req.getParameter("bankCard");
+//        int rankGuestId =Integer.parseInt(req.getParameter("rankGuestId"));
+//        RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+//        String address = req.getParameter("address");
+//        String passWork = req.getParameter("passWork");
+//
+//        Customer newCustomer = new Customer(name,bankCard,rankGuest,address,passWork);
+//        customerDao.creat(newCustomer);
+//        RequestDispatcher dispatcher = req.getRequestDispatcher("Customer/create.jsp");
+//        req.setAttribute("message", "New Customer was created");
+//        dispatcher.forward(req, resp);
+//    }
 
 
     //-------------------Edit thong tin SellProduct----------------------------
 
     public void showEdit(HttpServletRequest req,HttpServletResponse resp) throws IOException,SQLException,ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
-        SellProduct sellProduct = sellProductDao.select(id);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("SellProduct/edit.jsp");
-        req.setAttribute("sellProduct", sellProduct);
+        Customer customer = customerDao.select(id);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Customer/edit.jsp");
+        req.setAttribute("customer", customer);
         requestDispatcher.forward(req, resp);
     }
 
@@ -124,18 +127,15 @@ public class SellProductServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
-        int price = Integer.parseInt(req.getParameter("price"));
-        float discount = Float.parseFloat(req.getParameter("discount"));
-        int importAmount = Integer.parseInt(req.getParameter("importAmount"));
-        int exportAmount = Integer.parseInt(req.getParameter("exportAmount"));
-        String picture = req.getParameter("picture");
-        String properties = req.getParameter("properties");
-        String productType = req.getParameter("productType");
-        String maker = req.getParameter("maker");
+        String bankCard = req.getParameter("bankCard");
+        int rankGuestId =Integer.parseInt(req.getParameter("rankGuestId"));
+        RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+        String address = req.getParameter("address");
+        String passWork = req.getParameter("passWork");
 
-        SellProduct book = new SellProduct(id,name,price,discount,importAmount,exportAmount,picture,properties,productType,maker);
-        sellProductDao.edit(book);
-        resp.sendRedirect("/SellProduct");
+        Customer book = new Customer(id,name,bankCard,rankGuest,address,passWork);
+        customerDao.edit(book);
+        resp.sendRedirect("/Admin");
     }
 
 
@@ -143,11 +143,11 @@ public class SellProductServlet extends HttpServlet {
 
     public void showDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException,SQLException,ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
-        sellProductDao.delete(id);
+        customerDao.delete(id);
 
-        List<SellProduct> sellProducts =  sellProductDao.selectAll();
-        req.setAttribute("sellProducts", sellProducts);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/SellProductList.jsp");
+        List<Customer> customers =  customerDao.selectAll();
+        req.setAttribute("customers", customers);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("Customer/CustomerList.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -155,15 +155,15 @@ public class SellProductServlet extends HttpServlet {
     //-------------------find by Name----------------------------
 
     public void showFind(HttpServletRequest req, HttpServletResponse resp) throws IOException,SQLException,ServletException{
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("SellProduct/find.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Customer/find.jsp");
         requestDispatcher.forward(req,resp);
     }
 
     public void find(HttpServletRequest req,HttpServletResponse resp) throws IOException,SQLException,ServletException{
-        String name = req.getParameter("name");
-        List<SellProduct> sellProducts = sellProductDao.selectName(name);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("SellProduct/find.jsp");
-        req.setAttribute("sellProducts", sellProducts);
+        String find = req.getParameter("find");
+        List<Customer> customers = customerDao.selectName(find);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Customer/find.jsp");
+        req.setAttribute("customers", customers);
         requestDispatcher.forward(req, resp);
     }
 }

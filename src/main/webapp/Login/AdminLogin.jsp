@@ -1,7 +1,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CustomerList</title>
+    <title>Login Page</title>
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
@@ -86,61 +86,56 @@
             color: black;
             background-color: white;
         }
+        .links{
+            color: white;
+        }
         .links a{
             margin-left: 4px;
         }
     </style>
 </head>
 <body>
-<center>
-    <h1 style="background-color: blue">Danh sách khách hàng</h1>
-    <h2>
-        <button type="button" class="btn btn-warning"><a href="/SellProduct?action=sellProduct">SellProductList</a></button>
-        <button type="button" class="btn btn-warning"><a href="/Customer?action=customer">CustomerList</a></button>
-        <button type="button" class="btn btn-warning"><a href="/Admin?action=admin">AdminList</a></button>
-        <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
-
-        <br>
-        <br>
-        <form>
-            <div class="input-group form-group" style="width: fit-content">
-
-                <input type="text" class="form-control" name="find" placeholder="tên khách hàng,số tk">
-                <div class="input-group-prepend">
-                    <input type="submit"  value="find" class="input-group-text"><i></i></input>
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-header">
+                <h3>Sign In</h3>
+                <div class="d-flex justify-content-end social_icon">
+                    <span><i class="fab fa-facebook-square"></i></span>
+                    <span><i class="fab fa-google-plus-square"></i></span>
+                    <span><i class="fab fa-twitter-square"></i></span>
                 </div>
-
             </div>
-        </form>
-    </h2>
+            <div class="card-body">
+                <form method="post">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" name="username" placeholder="username">
 
-</center>
-<div align="center">
-    <table border="1" cellpadding="5" style="background-color: antiquewhite">
-        <tr>
-            <th>Id</th>
-            <th>Tên Khách hàng</th>
-            <th>Số tài khoản</th>
-            <th>rank khách hàng</th>
-            <th>Địa chỉ</th>
-            <th>Sửa</th>
-            <th>Xóa</th>
-
-        </tr>
-        <c:forEach var="customer" items="${customers}">
-            <tr>
-                <td><c:out value="${customer.id}"/></td>
-                <td><c:out value="${customer.name}"/></td>
-                <td><c:out value="${customer.bankCard }"/></td>
-                <td><c:out value="${customer.rankGuest.rankGuest}"/></td>
-                <td><c:out value="${customer.address}"/></td>
-
-                <td><button type="button" class="btn btn-warning"><a href="/Customer?id=${customer.id}&action=edit">Edit</a></button></td>
-                <td><button type="button" class="btn btn-danger"><a href="/Customer?id=${customer.id}&action=delete">Delete</a></button>
-            </tr>
-        </c:forEach>
-    </table>
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" name="password" placeholder="password">
+                    </div>
+                    <div class="row align-items-center remember">
+                        <input type="checkbox">Remember Me
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn float-right login_btn">
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    <a href="/Login?action=forgetAdmin">Forgot your password?</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
-

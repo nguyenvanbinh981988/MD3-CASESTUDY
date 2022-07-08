@@ -1,9 +1,7 @@
 package Controller;
 
 import Dao.AdminDao;
-import Dao.SellProductDao;
 import Model.Admin;
-import Model.SellProduct;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -97,9 +95,9 @@ public class AdminServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         String name = req.getParameter("name");
         String position = req.getParameter("position");
-        String passWork = req.getParameter("passWork");
+        String passWord = req.getParameter("passWord");
 
-        Admin newAdmin = new Admin(name,position,passWork);
+        Admin newAdmin = new Admin(name,position,passWord);
         adminDao.creat(newAdmin);
         RequestDispatcher dispatcher = req.getRequestDispatcher("Admin/create.jsp");
         req.setAttribute("message", "New sellProduct was created");
@@ -151,8 +149,8 @@ public class AdminServlet extends HttpServlet {
     }
 
     public void find(HttpServletRequest req,HttpServletResponse resp) throws IOException,SQLException,ServletException{
-        String name = req.getParameter("name");
-        List<Admin> admins = adminDao.selectName(name);
+        String find = req.getParameter("find");
+        List<Admin> admins = adminDao.selectName(find);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("Admin/find.jsp");
         req.setAttribute("admins", admins);
         requestDispatcher.forward(req, resp);
