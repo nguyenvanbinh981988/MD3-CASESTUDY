@@ -2,7 +2,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!------ Include the above in your HEAD tag ---------->
 
@@ -99,6 +99,9 @@
         <button type="button" class="btn btn-warning"><a href="/Customer?action=customer">CustomerList</a></button>
         <button type="button" class="btn btn-warning"><a href="/Admin?action=admin">AdminList</a></button>
         <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
+        <br>
+        <br>
+        <button type="button" class="btn btn-warning"><a href="/SellProduct?action=home">Back HomePage</a></button>
         <br>
         <br>
         <button type="button" class="btn btn-light"><a href="/SellProduct?action=create">AddSellProduct</a></button>

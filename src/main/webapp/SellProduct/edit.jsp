@@ -6,9 +6,9 @@
 </head>
 <body>
 <center>
-    <h1>Sửa thông tin của Hàng đăng trên Web</h1>
+    <h1>Sửa thông tin của hàng đăng trên Web</h1>
     <h2>
-        <a href="SellProduct?action=Sell">Quay về danh sách sản phẩm đăng lên Web</a>
+        <a href="SellProduct?action=sellProduct">Quay về danh sách sản phẩm đăng lên Web</a>
     </h2>
 </center>
 <div align="center">
@@ -19,6 +19,7 @@
                     Sửa thông tin:
                 </h2>
             </caption>
+            <input hidden name="action" value="edit">
             <c:if test="${sellProduct != null}">
                 <input type="hidden" name="id" value="<c:out value='${sellProduct.id}' />"/>
             </c:if>

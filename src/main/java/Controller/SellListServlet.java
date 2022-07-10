@@ -34,12 +34,11 @@ public class SellListServlet extends HttpServlet {
         }
         try {
             switch (action) {
-                case "create":
-                    create(req, resp);
-                    break;
+
                 case "editAdmin":
                     editAdmin(req, resp);
                     break;
+
                 case "find":
                     find(req, resp);
                     break;
@@ -59,7 +58,7 @@ public class SellListServlet extends HttpServlet {
         try {
             switch (action) {
                 case "create":
-                    showCreate(req, resp);
+                    create(req, resp);
                     break;
                 case "editAdmin":
                     showEditAdmin(req, resp);
@@ -113,13 +112,14 @@ public class SellListServlet extends HttpServlet {
 
         SellList newSellList = new SellList(exportAmount,customer,sellProduct,admin,statusCustomer,statusAdmin);
         sellListDao.creat(newSellList);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellList/create.jsp");
-        req.setAttribute("message", "New SellList was created");
-        dispatcher.forward(req, resp);
+
+        SellProductServlet sellProductServlet = new SellProductServlet();
+        sellProductServlet.showListWeb(req,resp);
+
     }
 
 
-    //-------------------Edit thong tin SellProduct----------------------------
+    //-------------------Edit thong tin SellList----------------------------
 
     public void showEditAdmin(HttpServletRequest req,HttpServletResponse resp) throws IOException,SQLException,ServletException{
         int id = Integer.parseInt(req.getParameter("id"));
@@ -138,8 +138,7 @@ public class SellListServlet extends HttpServlet {
         Customer customer = customerDao.select(customerId);
         int sellProductId = Integer.parseInt(req.getParameter("sellProductId"));
         SellProduct sellProduct = sellProductDao.select(sellProductId);
-        int adminId = Integer.parseInt(req.getParameter("adminId"));
-        Admin admin = adminDao.select(adminId);
+        Admin admin = LoginServlet.userAdmin;
         String statusCustomer = req.getParameter("statusCustomer");
         String statusAdmin = req.getParameter("statusAdmin");
 

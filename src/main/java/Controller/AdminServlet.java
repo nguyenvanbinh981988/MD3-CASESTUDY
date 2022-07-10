@@ -99,9 +99,7 @@ public class AdminServlet extends HttpServlet {
 
         Admin newAdmin = new Admin(name,position,passWord);
         adminDao.creat(newAdmin);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("Admin/create.jsp");
-        req.setAttribute("message", "New sellProduct was created");
-        dispatcher.forward(req, resp);
+        showList(req,resp);
     }
 
 

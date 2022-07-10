@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 
 <html>
 <head>
@@ -11,7 +11,7 @@
 <center>
     <h1>Tạo một sản phẩm mới</h1>
     <h2>
-        <a href="SellProduct?action=showList">Quay về danh sách sản phẩm</a>
+        <a href="/SellProduct?action=sellProduct">Quay về danh sách sản phẩm</a>
     </h2>
 </center>
 <div align="center">
@@ -65,12 +65,24 @@
             <tr>
                 <td>Loại sản phẩm:</td>
                 <td>
-                    <input type="text" name="productType" id="productTypeSellProduct" size="45"/>
+                    <select name="productType">
+                        <option value="smartphone">smartphone</option>
+                        <option value="laptop">laptop</option>
+                        <option value="tablet">tablet</option>
+                        <option value="computer">computer</option>
+                        <option value="watch">watch</option>
+                    </select>
                 </td>
             </tr><tr>
             <td>nhãn hàng:</td>
             <td>
-                <input type="text" name="maker" id="makerSellProduct" size="45"/>
+                <select name="maker">
+                    <option value="apple">apple</option>
+                    <option value="samsung">samsung</option>
+                    <option value="dell">dell</option>
+                    <option value="asus">asus</option>
+                    <option value="shark">shark</option>
+                </select>
             </td>
         </tr>
             <tr>

@@ -1,7 +1,9 @@
 package Dao;
 
 import Connect_MySQL.ConnectionMySQL;
+import Model.Admin;
 import Model.Customer;
+import Model.SellList;
 import Model.SellProduct;
 
 import java.sql.Connection;
@@ -12,8 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerActionDao {
+    CustomerDao customerDao =new CustomerDao();
+
+    SellProductDao sellProductDao = new SellProductDao();
+
+    AdminDao adminDao = new AdminDao();
+
     public List<SellProduct> selectByProductType(String productType) {
-        String sql = "select * from RankGuest where productType =?";
+        String sql = "select * from SELLPRODUCT where ProductType like concat('%',?,'%');";
+
         List<SellProduct> sellProducts = new ArrayList<>();
 
         try (Connection connection = ConnectionMySQL.getConnect();
@@ -47,13 +56,14 @@ public class CustomerActionDao {
     }
 
 
-    public List<SellProduct> selectByPrice(String productType, String maker1, int minPrice, int maxPrice) {
-        String sql = "select * from RankGuest where productType =?";
+    public List<SellProduct> selectByPrice(String productType1, String maker1, int minPrice, int maxPrice) {
+        String sql = "select * from SELLPRODUCT where productType like concat('%',?,'%') and maker like concat('%',?,'%');";
         List<SellProduct> sellProducts = new ArrayList<>();
 
         try (Connection connection = ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, productType);
+            preparedStatement.setString(1, productType1);
+            preparedStatement.setString(2, maker1);
 
             System.out.println(preparedStatement);
 
@@ -69,18 +79,11 @@ public class CustomerActionDao {
 
                 String picture = rs.getString("picture");
                 String properties = rs.getString("properties");
+                String productType = rs.getString("productType");
                 String maker = rs.getString("maker");
 
 
                 sellProducts.add(new SellProduct(id, name, price, discount, importAmount, exportAmount, picture, properties, productType, maker));
-            }
-
-            if (maker1 != null) {
-                for (int i = 0; i < sellProducts.size(); i++) {
-                    if (!maker1.equals(sellProducts.get(i).getMaker())) {
-                        sellProducts.remove(i);
-                    }
-                }
             }
 
             for (int i = 0; i < sellProducts.size(); i++) {
@@ -102,4 +105,46 @@ public class CustomerActionDao {
         }
         return sellProducts;
     }
+
+
+//    ----------------------------giỏ hàng--------------------------
+
+    public List<SellList> selectByGio(String statusAdmin1) {
+        String sql = "select * from SellList where statusAdmin like concat('%',?,'%');";
+
+        List<SellList> sellLists = new ArrayList<>();
+
+        try (Connection connection = ConnectionMySQL.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, statusAdmin1);
+
+            System.out.println(preparedStatement);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int exportAmount = rs.getInt("exportAmount");
+                int customerId = rs.getInt("customerId");
+                Customer customer = customerDao.select(customerId);
+
+                int sellProductId = rs.getInt("sellProductId");
+                SellProduct sellProduct = sellProductDao.select(sellProductId);
+
+                int adminId = rs.getInt("adminId");
+                Admin admin = adminDao.select(adminId);
+
+                String statusCustomer = rs.getString("statusCustomer");
+                String statusAdmin = rs.getString("statusAdmin");
+
+
+                sellLists.add(new SellList(id, exportAmount, customer,sellProduct,admin,statusCustomer,statusAdmin));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return sellLists;
+    }
+
 }

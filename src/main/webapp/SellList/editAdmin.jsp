@@ -7,6 +7,11 @@
 <body>
 <center>
   <h1>Sửa thông tin tình trạng xuất hàng</h1>
+  <br>
+  <button type="button" class="btn btn-warning"><a href="/SellProduct?action=home">Back HomePage</a></button>
+  <br>
+  <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
+
 </center>
 <div align="center">
   <form method="post">
@@ -14,17 +19,17 @@
       <c:if test="${sellList != null}">
         <input type="hidden" name="id" value="<c:out value='${sellList.id}' />"/>
         <input type="hidden" name="exportAmount" value="<c:out value='${sellList.exportAmount}' />"/>
-        <input type="hidden" name="customerId" value="<c:out value='${sellList.customer.customerId}' />"/>
-        <input type="hidden" name="sellProductId" value="<c:out value='${sellList.sellProduct.sellProductId}' />"/>
-        <input type="hidden" name="adminId" value="<c:out value='${sellList.admin.adminId}' />"/>
-        <input type="hidden" name="statusAdmin" value="<c:out value='${sellList.statusAdmin}' />"/>
+        <input type="hidden" name="customerId" value="<c:out value='${sellList.customer.id}' />"/>
+        <input type="hidden" name="sellProductId" value="<c:out value='${sellList.sellProduct.id}' />"/>
+        <input type="hidden" name="adminId" value="<c:out value='${sellList.admin.id}' />"/>
+        <input type="hidden" name="statusCustomer" value="<c:out value='${sellList.statusCustomer}' />"/>
       </c:if>
       <tr>
         <th>tình trạng xuất hàng:</th>
       <tr>
-        <td><select type="text" name="statusCustomer">
-          <option value="giao hàng nhận tiền">giao hàng nhận tiền</option>
-          <option value="đã chuyển khoản">đã chuyển khoản</option>
+        <td><select type="text" name="statusAdmin">
+          <option value="transferred">đã nhận chuyển khoản</option>
+          <option value="delivered">đã giao hàng xong</option>
         </select>
         </td>
       </tr>

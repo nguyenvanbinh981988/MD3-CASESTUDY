@@ -76,7 +76,7 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    //-------------------Hien thi toan bo list SellProduct----------------------------
+    //-------------------Hien thi toan bo list Customer----------------------------
     private void showList(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
         List<Customer> customers = customerDao.selectAll();
@@ -86,7 +86,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
 
-    //-------------------add SellProduct----------------------------
+    //-------------------add Customer----------------------------
 
 //    private void showCreate(HttpServletRequest req, HttpServletResponse resp)
 //            throws ServletException, IOException {
@@ -128,14 +128,14 @@ public class CustomerServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String bankCard = req.getParameter("bankCard");
-        int rankGuestId =Integer.parseInt(req.getParameter("rankGuestId"));
-        RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+        String rankG =req.getParameter("rankG");
+        RankGuest rankGuest = rankGuestDao.selectRankName(rankG);
         String address = req.getParameter("address");
         String passWork = req.getParameter("passWork");
 
         Customer book = new Customer(id,name,bankCard,rankGuest,address,passWork);
         customerDao.edit(book);
-        resp.sendRedirect("/Admin");
+        resp.sendRedirect("/Customer");
     }
 
 

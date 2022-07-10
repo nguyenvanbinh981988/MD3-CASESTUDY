@@ -28,8 +28,8 @@ public class CustomerDao implements CRUD<Customer> {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String bankCard = rs.getString("bankCard");
-                int rankGuestId = rs.getInt("rankGuestId");
-                RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+                int rankGId = rs.getInt("rankGId");
+                RankGuest rankGuest = rankGuestDao.select(rankGId);
                 String address = rs.getString("address");
                 String passWord = rs.getString("passWord");
 
@@ -58,8 +58,8 @@ public class CustomerDao implements CRUD<Customer> {
             while (rs.next()) {
                 String name = rs.getString("name");
                 String bankCard = rs.getString("bankCard");
-                int rankGuestId = rs.getInt("rankGuestId");
-                RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+                int rankGId = rs.getInt("rankGId");
+                RankGuest rankGuest = rankGuestDao.select(rankGId);
                 String address = rs.getString("address");
                 String passWord = rs.getString("passWord");
 
@@ -78,7 +78,7 @@ public class CustomerDao implements CRUD<Customer> {
 
 
     public boolean creat(Customer customer) throws SQLException {
-        String spl = "INSERT INTO CUSTOMER (name, bankCard,rankGuestId,address,passWord) VALUES (?,?,?,?,?);";
+        String spl = "INSERT INTO CUSTOMER (name, bankCard,rankGId,address,passWord) VALUES (?,?,?,?,?);";
         try (Connection connection =  ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(spl);) {
             preparedStatement.setString(1, customer.getName());
@@ -97,7 +97,7 @@ public class CustomerDao implements CRUD<Customer> {
     //----------------------------EDIT----------------------------------
 
     public boolean edit(Customer customer) throws SQLException{
-        String sql = "update CUSTOMER set name = ?, bankcard =?,rankGuestId=?,address=?,passWord = ? where id = ?;";
+        String sql = "update CUSTOMER set name = ?, bankcard =?,rankGId=?,address=?,passWord = ? where id = ?;";
         boolean rowEdit;
         try (Connection connection =  ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -146,8 +146,8 @@ public class CustomerDao implements CRUD<Customer> {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String bankCard = rs.getString("bankCard");
-                int rankGuestId = rs.getInt("rankGuestId");
-                RankGuest rankGuest = rankGuestDao.select(rankGuestId);
+                int rankGId = rs.getInt("rankGId");
+                RankGuest rankGuest = rankGuestDao.select(rankGId);
                 String address = rs.getString("address");
                 String passWord = rs.getString("passWord");
 

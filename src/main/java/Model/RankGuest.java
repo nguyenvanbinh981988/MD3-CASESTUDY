@@ -2,17 +2,17 @@ package Model;
 
 public class RankGuest {
     private int id;
-    private String rankGuest;
+    private String rankG;
     private double discount;
 
-    public RankGuest(String rankGuest, double discount) {
-        this.rankGuest = rankGuest;
+    public RankGuest(String rankG, double discount) {
+        this.rankG = rankG;
         this.discount = discount;
     }
 
-    public RankGuest(int id, String rankGuest, double discount) {
+    public RankGuest(int id, String rankG, double discount) {
         this.id = id;
-        this.rankGuest = rankGuest;
+        this.rankG = rankG;
         this.discount = discount;
     }
 
@@ -24,12 +24,12 @@ public class RankGuest {
         this.id = id;
     }
 
-    public String getRankGuest() {
-        return rankGuest;
+    public String getRankG() {
+        return rankG;
     }
 
-    public void setRankGuest(String rankGuest) {
-        this.rankGuest = rankGuest;
+    public void setRankG(String rankG) {
+        this.rankG = rankG;
     }
 
     public double getDiscount() {

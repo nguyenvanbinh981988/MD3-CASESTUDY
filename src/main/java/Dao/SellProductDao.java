@@ -182,6 +182,83 @@ public class SellProductDao implements CRUD<SellProduct> {
         }
         return sellProducts;
     }
+
+    public List<SellProduct> selectByProductType(String string){
+        String sql = "select * from SELLPRODUCT where ProductType like concat('%',?,'%');";
+
+        List<SellProduct> sellProducts = new ArrayList<>();
+
+        try (Connection connection =  ConnectionMySQL.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, string);
+
+            System.out.println(preparedStatement);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int price = rs.getInt("price");
+                float discount = rs.getFloat("discount");
+                int importAmount = rs.getInt("importAmount");
+                int exportAmount = rs.getInt("exportAmount");
+
+                String picture = rs.getString("picture");
+                String properties = rs.getString("properties");
+                String maker = rs.getString("maker");
+
+
+
+                SellProduct sellProduct = new SellProduct(id, name, price, discount, importAmount, exportAmount, picture, properties,string,maker);
+                sellProducts.add(sellProduct);
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return sellProducts;
+    }
+
+    public List<SellProduct> selectByProductMaker(String string){
+        String sql = "select * from SellProduct where maker = ?;";
+        List<SellProduct> sellProducts = new ArrayList<>();
+
+        try (Connection connection =  ConnectionMySQL.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, string);
+
+            System.out.println(preparedStatement);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                if (string.equals(rs.getString("productType"))) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    int price = rs.getInt("price");
+                    float discount = rs.getFloat("discount");
+                    int importAmount = rs.getInt("importAmount");
+                    int exportAmount = rs.getInt("exportAmount");
+
+                    String picture = rs.getString("picture");
+                    String properties = rs.getString("properties");
+                    String maker = rs.getString("productType");
+
+
+
+                    SellProduct sellProduct = new SellProduct(id, name, price, discount, importAmount, exportAmount, picture, properties,maker,string);
+                    sellProducts.add(sellProduct);
+                }
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return sellProducts;
+    }
 }
 
 

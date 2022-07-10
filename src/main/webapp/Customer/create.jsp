@@ -123,7 +123,7 @@
                         <input type="password" class="form-control" name="bankCard" placeholder="Số thẻ ngân hàng">
                     </div>
                     <div class="input-group form-group">
-                        <input type="hidden" class="form-control" name="rankGuest" value="copper">
+                        <input type="hidden" class="form-control" name="rankG" value="copper">
                     </div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">

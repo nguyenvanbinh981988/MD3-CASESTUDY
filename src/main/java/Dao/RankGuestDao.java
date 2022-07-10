@@ -24,10 +24,10 @@ public class RankGuestDao implements CRUD<RankGuest> {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String rankGuest = resultSet.getString("rankGuest");
+                String rankG = resultSet.getString("rankG");
                 Double discount = Double.parseDouble(resultSet.getString("discount"));
 
-                rankGuests.add(new RankGuest(id, rankGuest,discount));
+                rankGuests.add(new RankGuest(id, rankG,discount));
             }
 
         } catch (SQLException e) {
@@ -50,10 +50,10 @@ public class RankGuestDao implements CRUD<RankGuest> {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                String rankGuestSt = rs.getString("rankGuest");
+                String rankGSt = rs.getString("rankG");
                 Double discount = Double.parseDouble(rs.getString("discount"));
 
-                rankGuest = new RankGuest(id,rankGuestSt,discount);
+                rankGuest = new RankGuest(id,rankGSt,discount);
             }
 
         } catch (SQLException e) {
@@ -67,10 +67,10 @@ public class RankGuestDao implements CRUD<RankGuest> {
 
 
     public boolean creat(RankGuest rankGuest) throws SQLException {
-        String spl = "INSERT INTO RankGuest (rankGuest,discount ) VALUES (?,?);";
+        String spl = "INSERT INTO RankGuest (rankG,discount ) VALUES (?,?);";
         try (Connection connection =  ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(spl);) {
-            preparedStatement.setString(1, rankGuest.getRankGuest());
+            preparedStatement.setString(1, rankGuest.getRankG());
             preparedStatement.setDouble(2, rankGuest.getDiscount());
 
             return preparedStatement.execute();
@@ -82,11 +82,11 @@ public class RankGuestDao implements CRUD<RankGuest> {
     //----------------------------EDIT----------------------------------
 
     public boolean edit(RankGuest rankGuest) throws SQLException{
-        String sql = "update RankGuest set rankGuest = ?,discount =? where id = ?;";
+        String sql = "update RankGuest set rankG = ?,discount =? where id = ?;";
         boolean rowEdit;
         try (Connection connection =  ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, rankGuest.getRankGuest());
+            preparedStatement.setString(1, rankGuest.getRankG());
             preparedStatement.setDouble(2, rankGuest.getDiscount());
             preparedStatement.setInt(3, rankGuest.getId());
 
@@ -111,13 +111,13 @@ public class RankGuestDao implements CRUD<RankGuest> {
 
 //----------------------------FIND----------------------------------
 
-    public List<RankGuest> selectName(String rankGuestSt){
-        String sql = "select * from RankGuest where rankGuest =?;";
+    public List<RankGuest> selectName(String rankG){
+        String sql = "select * from RankGuest where rankG =?;";
         List<RankGuest> rankGuests = new ArrayList<>();
 
         try (Connection connection =  ConnectionMySQL.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, rankGuestSt);
+            preparedStatement.setString(1, rankG);
             System.out.println(preparedStatement);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -125,15 +125,38 @@ public class RankGuestDao implements CRUD<RankGuest> {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Double discount = rs.getDouble("discount");
-                RankGuest rankGuest = new RankGuest(id, rankGuestSt,discount);
+                RankGuest rankGuest = new RankGuest(id, rankG, discount);
 
                 rankGuests.add(rankGuest);
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return rankGuests;
+    }
+
+
+
+    public RankGuest selectRankName(String rankG){
+        String sql = "select * from RankGuest where rankG =?;";
+        RankGuest rankGuest = null;
+
+        try (Connection connection =  ConnectionMySQL.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, rankG);
+            System.out.println(preparedStatement);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                Double discount = rs.getDouble("discount");
+                rankGuest = new RankGuest(id, rankG, discount);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rankGuest;
     }
 }

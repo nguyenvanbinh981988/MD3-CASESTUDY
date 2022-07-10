@@ -22,7 +22,6 @@
             <c:if test="${admin != null}">
                 <input type="hidden" name="id" value="<c:out value='${admin.id}' />"/>
                 <input type="hidden" name="passWord" value="<c:out value='${admin.passWord}' />"/>
-
             </c:if>
             <tr>
                 <th>Tên Admin:</th>

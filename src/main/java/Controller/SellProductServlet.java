@@ -1,7 +1,11 @@
 package Controller;
 
 import Dao.CustomerActionDao;
+import Dao.SellListDao;
 import Dao.SellProductDao;
+import Model.Admin;
+import Model.Customer;
+import Model.SellList;
 import Model.SellProduct;
 
 import javax.servlet.*;
@@ -17,6 +21,7 @@ public class SellProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private SellProductDao sellProductDao = new SellProductDao();
     private CustomerActionDao customerActionDao = new CustomerActionDao();
+    private SellListDao sellListDao = new SellListDao();
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -61,11 +66,14 @@ public class SellProductServlet extends HttpServlet {
                 case "find":
                     showFind(req, resp);
                     break;
-                case "showListWeb":
-                    showListWeb(req, resp);
+                case "findA":
+                    findA(req, resp);
+                    break;
+                case "sellProduct":
+                    showList(req, resp);
                     break;
                 default:
-                    showList(req, resp);
+                    showListWeb(req, resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -74,21 +82,29 @@ public class SellProductServlet extends HttpServlet {
     }
 
     //-------------------Hien thi toan bo list lên Web----------------------------
-    private void showListWeb(HttpServletRequest req, HttpServletResponse resp)
+    public void showListWeb(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
-        List<SellProduct> lapTops = customerActionDao.selectByProductType("lapTop");
-        List<SellProduct> mayTinhBangs = customerActionDao.selectByProductType("máy tính bảng");
-        List<SellProduct> dienThoais = customerActionDao.selectByProductType("điện thoại");
-        List<SellProduct> mayTinhBans = customerActionDao.selectByProductType("máy tính bàn");
-        List<SellProduct> dongHos = customerActionDao.selectByProductType("đồng hồ");
+
+        Admin userAdmin = LoginServlet.userAdmin;
+        Customer user = LoginServlet.user;
+        req.setAttribute("userAdmin", userAdmin);
+        req.setAttribute("user", user);
 
 
-        req.setAttribute("lapTops", lapTops);
-        req.setAttribute("mayTinhBangs", mayTinhBangs);
-        req.setAttribute("dienThoais", dienThoais);
-        req.setAttribute("mayTinhBangs", mayTinhBans);
-        req.setAttribute("dongHos", dongHos);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/SellProductList.jsp");
+
+        List<SellProduct> laptops = sellProductDao.selectByProductType("laptop");
+        List<SellProduct>  tablets = sellProductDao.selectByProductType("tablet");
+        List<SellProduct> smartPhones = sellProductDao.selectByProductType("smartPhone");
+        List<SellProduct> computers = sellProductDao.selectByProductType("computer");
+        List<SellProduct>  watchs = sellProductDao.selectByProductType("watch");
+
+
+        req.setAttribute("laptops", laptops);
+        req.setAttribute("tablets", tablets);
+        req.setAttribute("smartPhones", smartPhones);
+        req.setAttribute("computers", computers);
+        req.setAttribute("watchs", watchs);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -96,6 +112,15 @@ public class SellProductServlet extends HttpServlet {
     private void showList(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
         List<SellProduct> sellProducts = sellProductDao.selectAll();
+        List<SellList> sellLists = sellListDao.selectAll();
+        for (int i = 0; i < sellProducts.size(); i++) {
+            for (int j = 0; j < sellLists.size(); j++) {
+                if (sellProducts.get(i).getId()==sellLists.get(j).getSellProduct().getId()){
+                    sellProducts.get(i).setExportAmount(sellProducts.get(i).getExportAmount()+sellLists.get(j).getExportAmount());
+                }
+            }
+
+        }
 
         req.setAttribute("sellProducts", sellProducts);
         RequestDispatcher dispatcher = req.getRequestDispatcher("SellProduct/SellProductList.jsp");
@@ -158,7 +183,7 @@ public class SellProductServlet extends HttpServlet {
 
         SellProduct book = new SellProduct(id,name,price,discount,importAmount,exportAmount,picture,properties,productType,maker);
         sellProductDao.edit(book);
-        resp.sendRedirect("/SellProduct");
+        showList(req,resp);
     }
 
 
@@ -188,5 +213,10 @@ public class SellProductServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("SellProduct/find.jsp");
         req.setAttribute("sellProducts", sellProducts);
         requestDispatcher.forward(req, resp);
+    }
+
+    public void findA(HttpServletRequest req,HttpServletResponse resp) throws IOException,SQLException,ServletException{
+        CustomerActionServlet customerActionServlet = new CustomerActionServlet();
+        customerActionServlet.find(req,resp);
     }
 }

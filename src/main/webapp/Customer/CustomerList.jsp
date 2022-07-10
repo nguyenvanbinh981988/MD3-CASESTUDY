@@ -99,7 +99,9 @@
         <button type="button" class="btn btn-warning"><a href="/Customer?action=customer">CustomerList</a></button>
         <button type="button" class="btn btn-warning"><a href="/Admin?action=admin">AdminList</a></button>
         <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
-
+        <br>
+        <br>
+        <button type="button" class="btn btn-warning"><a href="/SellProduct?action=home">Back HomePage</a></button>
         <br>
         <br>
         <form>
@@ -132,7 +134,7 @@
                 <td><c:out value="${customer.id}"/></td>
                 <td><c:out value="${customer.name}"/></td>
                 <td><c:out value="${customer.bankCard }"/></td>
-                <td><c:out value="${customer.rankGuest.rankGuest}"/></td>
+                <td><c:out value="${customer.rankGuest.rankG}"/></td>
                 <td><c:out value="${customer.address}"/></td>
 
                 <td><button type="button" class="btn btn-warning"><a href="/Customer?id=${customer.id}&action=edit">Edit</a></button></td>

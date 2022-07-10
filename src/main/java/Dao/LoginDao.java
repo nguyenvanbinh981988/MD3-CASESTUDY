@@ -14,7 +14,7 @@ public class LoginDao {
     RankGuestDao rankGuestDao = new RankGuestDao();
 
     public Customer selectByPassWord(String name,String passWord){
-        String sql = "select * from CUSTOMER where name =? and passWord =? ;";
+        String sql = "select * from CUSTOMER where name = ? and passWord = ? ;";
         Customer customer = null;
 
         try (Connection connection =  ConnectionMySQL.getConnect();
@@ -28,7 +28,7 @@ public class LoginDao {
 
             rs.next();
             int id = rs.getInt("id");
-            int rankGuestId =Integer.parseInt(rs.getString("rankGuestId"));
+            int rankGuestId =rs.getInt("rankGId");
             RankGuest rankGuest = rankGuestDao.select(rankGuestId);
             String address = rs.getString("address");
             String bankCard = rs.getString("bankCard");
@@ -59,7 +59,7 @@ public class LoginDao {
 
             rs.next();
             int id = rs.getInt("id");
-            int rankGuestId =Integer.parseInt(rs.getString("rankGuestId"));
+            int rankGuestId =rs.getInt("rankGId");
             RankGuest rankGuest = rankGuestDao.select(rankGuestId);
             String address = rs.getString("address");
             String passWord = rs.getString("passWord");

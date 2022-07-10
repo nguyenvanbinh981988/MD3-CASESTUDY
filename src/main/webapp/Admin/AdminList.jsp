@@ -100,6 +100,13 @@
     <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
     <br>
     <br>
+    <button type="button" class="btn btn-warning"><a href="/SellProduct?action=home">Back HomePage</a></button>
+    <br>
+    <br>
+    <button type="button" class="btn btn-light"><a href="/Admin?action=create">addAdmin</a></button>
+    <br>
+    <br>
+    <br>
     <form>
       <div class="input-group form-group" style="width: fit-content">
 

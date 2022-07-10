@@ -101,6 +101,9 @@
         <button type="button" class="btn btn-warning"><a href="/SellList?action=sellList">SellList</a></button>
         <br>
         <br>
+        <button type="button" class="btn btn-warning"><a href="/SellProduct?action=home">Back HomePage</a></button>
+        <br>
+        <br>
         <form>
             <div class="input-group form-group" style="width: fit-content">
 
@@ -149,7 +152,7 @@
                 <td><c:out value="${sellList.statusAdmin}"/></td>
 
 
-                <td><button type="button" class="btn btn-warning"><a href="/SellList?id=${sellList.id}&action=editAmin">Edit</a></button></td>
+                <td><button type="button" class="btn btn-warning"><a href="/SellList?id=${sellList.id}&action=editAdmin">Edit</a></button></td>
                 <td><button type="button" class="btn btn-danger"><a href="/SellList?id=${sellList.id}&action=delete">Delete</a></button>
             </tr>
         </c:forEach>

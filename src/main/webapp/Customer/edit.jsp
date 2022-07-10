@@ -37,8 +37,8 @@
             <tr>
                 <th>Rank khách hàng:</th>
                 <td>
-                    <input type="text" name="rankGuest" size="45"
-                           value="<c:out value='${customer.rankGuest}' />"
+                    <input type="text" name="rankG" size="45"
+                           value="<c:out value='${customer.rankGuest.rankG}' />"
                     />
                 </td>
             </tr>
